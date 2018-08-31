@@ -26,4 +26,5 @@
     </string>
 
     <string name="resume">resume...</string>
+    <string name="title_activity_pos_app">PosAppActivity</string>
 </resources>

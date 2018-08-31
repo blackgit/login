@@ -20,7 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.content.res.Resources;
 
-public class LocatioAppActivity extends AppCompatActivity {
+public class LocatioAppActivity
+    extends AppCompatActivity
+    implements ActivityCompat.OnRequestPermissionsResultCallback{
 
     LocationManager locationManager;
     double longitudeBest, latitudeBest;
@@ -79,7 +81,7 @@ public class LocatioAppActivity extends AppCompatActivity {
         if (!checkLocation())
             return;
         Button button = (Button) view;
-        //if (button.getText().equals(Resources.getSystem().getString(R.string.pause))) {
+        //if (button.getText().equals(getResources().getString(R.string.pause))) {
             locationManager.removeUpdates(locationListenerGPS);
             button.setText(R.string.resume);
         //} else {
@@ -136,6 +138,7 @@ public class LocatioAppActivity extends AppCompatActivity {
         }
         */
     }
+
     private final LocationListener locationListenerBest = new LocationListener() {
         public void onLocationChanged(Location location) {
             longitudeBest = location.getLongitude();
