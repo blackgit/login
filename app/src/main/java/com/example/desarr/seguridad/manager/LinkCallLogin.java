@@ -1,29 +1,21 @@
-package com.example.desarr.seguridad;
+package com.example.desarr.seguridad.manager;
 
 import android.os.AsyncTask;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 
-public class LinkCall extends AsyncTask<String,Void,String> {
+public class LinkCallLogin extends AsyncTask<String,Void,String> {
 
-    TextView aView;
+    String user;
     String code;
 
-    public LinkCall(TextView aView, String code){
-        this.aView = aView;
+    public LinkCallLogin(String aUser, String code){
+        this.user = aUser;
         this.code = code;
     }
 
@@ -38,22 +30,13 @@ public class LinkCall extends AsyncTask<String,Void,String> {
         StringBuilder sb=null;
         BufferedReader reader=null;
         String serverResponse=null;
-        StringBuffer sbff=null;
-
         URL url;
         HttpURLConnection connection = null;
         int statusCode = 0;
-        String urls = null;
-        String encodedUrl = null;
         try {
-            //urls = "http://10.14.10.88/cgepm/web/app.php/movil/seguridadmovil/decodificar/"+code;
-            //url = new URL("http://cgepm.gov.ar/sage/androidxyx/android_traer_servicios.asp?documento=28554317");
-            //url = new URL( "http://www.cgepm.gov.ar:8888/sf/web/movil/seguridadmovil/decodificar/"+code);
-            url = new URL( "http://10.14.10.88/cgepm/web/app.php/movil/seguridadmovil/decodificar/"+code);
-            //encodedUrl = URLEncoder.encode(urls, "UTF-8");
-            System.out.println(encodedUrl);
+            //url = new URL( "http://www.cgepm.gov.ar:8888/sf/web/movil/seguridadmovil/ver/"+code);
+            url = new URL("http://cgepm.gov.ar/sage/androidxyx/android_traer_servicios.asp?documento=28554317");
             connection = (HttpURLConnection) url.openConnection();
-            System.out.println(connection.getURL().toString());
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connection.setConnectTimeout(10000);
             connection.setRequestMethod("GET");
@@ -64,6 +47,7 @@ public class LinkCall extends AsyncTask<String,Void,String> {
         }
         try{
             if (statusCode == 200) {
+                System.out.println("status code 200");
                 sb = new StringBuilder();
                 reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String line;
@@ -74,7 +58,6 @@ public class LinkCall extends AsyncTask<String,Void,String> {
             connection.disconnect();
             if (sb!=null)
                 serverResponse=sb.toString();
-                //serverResponse="df";
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -93,7 +76,5 @@ public class LinkCall extends AsyncTask<String,Void,String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         //All your UI operation can be performed here
-        System.out.println(s);
-        this.aView.setText(s);
     }
 }

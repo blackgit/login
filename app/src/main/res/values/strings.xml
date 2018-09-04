@@ -6,10 +6,11 @@
     <string name="nombre">tu nombre:</string>
     <string name="email">tu email:</string>
     <string name="aceptar">Aceptar</string>
+    <string name="response">Response</string>
     <string name="send">Send</string>
     <string name="resultado">Send</string>
-    <string name="hola">H</string>
-    <string name="adios">A</string>
+    <string name="hola">Hola</string>
+    <string name="adios">Adios</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->

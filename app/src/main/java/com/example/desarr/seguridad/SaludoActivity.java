@@ -7,6 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.desarr.seguridad.custom.SecurityKey;
+import com.example.desarr.seguridad.manager.LinkCall;
+import com.example.desarr.seguridad.manager.LinkCallParams;
+
 public class SaludoActivity extends AppCompatActivity {
 
     private EditText txtStringToCode;
@@ -40,31 +44,35 @@ public class SaludoActivity extends AppCompatActivity {
 
         //Code
         final String codeUser, codePass;
+
         //Mensaje a mostrar
         txtSaludo.setText(uno+ " :: "+ dos);
+
         //Proceso
-        //codeUser = SecurityKey.codificar(uno);
-        //codePass = SecurityKey.codificar(dos);
+        codeUser = SecurityKey.codificar(uno);
+        codePass = SecurityKey.codificar(dos);
+
         //Eventos botón
-        /*btnSend.setOnClickListener(new View.OnClickListener() {
+        btnEncode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtStringEncoded.setText("");
+                txtStringEncoded.setText(SecurityKey.codificarParametros(txtStringToCode.getText().toString()));
+            }
+        });
+        btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new LinkCall(lblResultado, codeUser).execute();
             }
-        });*/
+        });
         btnSendParametros.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            new LinkCallParams(lblParametros, "parametro fijo").execute();
+                new LinkCallParams(lblParametros, "parametro fijo").execute();
             }
         });
-        btnEncode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            txtStringEncoded.setText("");
-            txtStringEncoded.setText(SecurityKey.codificarParametros(txtStringToCode.getText().toString()));
-            }
-        });
+
     }
 
 }

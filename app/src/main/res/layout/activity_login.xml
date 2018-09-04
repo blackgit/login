@@ -36,7 +36,6 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <AutoCompleteTextView
                     android:id="@+id/email"
                     android:layout_width="match_parent"
@@ -45,13 +44,11 @@
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />
-
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <EditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
@@ -63,7 +60,6 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true" />
-
             </android.support.design.widget.TextInputLayout>
 
             <Button
@@ -74,73 +70,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
-            <TextView
-                android:id="@+id/longitudeTextGPS"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="longitude"
-                android:textSize="20sp"/>
 
-            <TextView
-                android:id="@+id/latitudeTextGPS"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/longitudeTextGPS"
-                android:text="latitude"
-                android:textSize="20sp"/>
-            <TextView
-                android:id="@+id/latitudeValueGPS"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/longitudeValueGPS"
-                android:layout_toRightOf="@id/longitudeTextGPS"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:text="0.0000"
-                android:textSize="20sp"/>
-            <TextView
-                android:id="@+id/longitudeValueGPS"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/longitudeTextGPS"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:text="0.0000"
-                android:textSize="20sp"/>
-            <TextView
-                android:id="@+id/longitudeValueNetwork"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:text="0.0000"
-                android:textSize="20sp"/>
-            <TextView
-                android:id="@+id/latitudeValueNetwork"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/longitudeValueNetwork"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:text="0.0000"
-                android:textSize="20sp"/>
-            <TextView
-                android:id="@+id/latitudeValueBest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/longitudeValueBest"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:text="0.0000"
-                android:textSize="20sp"/>
-            <TextView
-                android:id="@+id/longitudeValueBest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/locationControllerBest"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:text="0.0000"
-                android:textSize="20sp"/>
-            <Button
-                android:id="@+id/locationControllerBest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true" />
         </LinearLayout>
 
     </ScrollView>

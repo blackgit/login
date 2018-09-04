@@ -1,4 +1,4 @@
-package com.example.desarr.seguridad;
+package com.example.desarr.seguridad.manager;
 
 import android.os.AsyncTask;
 import android.widget.TextView;
@@ -30,18 +30,13 @@ public class LinkCallParams extends AsyncTask<String,Void,String> {
         StringBuilder sb=null;
         BufferedReader reader=null;
         String serverResponse=null;
-        StringBuffer sbff=null;
-
         URL url;
         HttpURLConnection connection = null;
         int statusCode = 0;
-        String urls = null;
-        String encodedUrl = null;
         try {
             //url = new URL("http://cgepm.gov.ar/sage/androidxyx/android_traer_servicios.asp?documento=28554317");
             //url = new URL("http://cgepm.gov.ar/sage/androidxyx/test.asp");
             url = new URL( "http://www.cgepm.gov.ar:8888/sf/web/movil/seguridadmovil/ver/"+code);
-            System.out.println("CODE:    "+code);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connection.setConnectTimeout(10000);

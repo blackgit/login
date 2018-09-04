@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText txtUser;
     private EditText txtPass;
+    private EditText txtRep;
     private Button btnAceptar;
     private Menu aMenuH, aMenuA;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         //Referencia a los controles de la interfaz
         txtUser = (EditText)findViewById(R.id.txtUser);
         txtPass = (EditText) findViewById(R.id.txtPass);
+        txtRep = (EditText) findViewById(R.id.txtResponse);
         btnAceptar = (Button)findViewById(R.id.btnAceptar);
         aMenuH = findViewById(R.id.hola);
         aMenuA = findViewById(R.id.adios);
@@ -35,8 +37,10 @@ public class MainActivity extends AppCompatActivity {
         String uno = bundle.getString("USER");
         String dos = bundle.getString("PASS");
         String tres = bundle.getString("SEC");
-        txtUser.setText(uno+"---"+dos);
-        txtPass.setText(tres);
+
+        txtUser.setText(uno);
+        txtPass.setText(dos);
+        txtRep.setText(tres);
 
         //Evento click del botón
         btnAceptar.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             Bundle b = new Bundle();
             b.putString("USER", txtUser.getText().toString());
             b.putString("PASS", txtPass.getText().toString());
+            b.putString("RESP", txtRep.getText().toString());
 
             //Información al intent
             intent.putExtras(b);

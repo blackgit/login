@@ -18,9 +18,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.res.Resources;
 
-public class LocatioAppActivity
+public class LocationAppActivity
     extends AppCompatActivity
     implements ActivityCompat.OnRequestPermissionsResultCallback{
 
@@ -150,7 +149,7 @@ public class LocatioAppActivity
                     longitudeValueBest.setText(longitudeBest + "");
                     latitudeValueBest.setText(latitudeBest + "");
                     Toast.makeText(
-                        LocatioAppActivity.this,
+                        LocationAppActivity.this,
                         "Best Provider update",
                         Toast.LENGTH_SHORT).show();
                 }
@@ -177,7 +176,7 @@ public class LocatioAppActivity
                 public void run() {
                     longitudeValueNetwork.setText(longitudeNetwork + "");
                     latitudeValueNetwork.setText(latitudeNetwork + "");
-                    Toast.makeText(LocatioAppActivity.this, "Network Provider update", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LocationAppActivity.this, "Network Provider update", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -205,7 +204,7 @@ public class LocatioAppActivity
                 public void run() {
                     longitudeValueGPS.setText(longitudeGPS + "");
                     latitudeValueGPS.setText(latitudeGPS + "");
-                    Toast.makeText(LocatioAppActivity.this, "GPS Provider update", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LocationAppActivity.this, "GPS Provider update", Toast.LENGTH_SHORT).show();
                 }
             });
         }

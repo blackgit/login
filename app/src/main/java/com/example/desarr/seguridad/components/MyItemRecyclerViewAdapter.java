@@ -1,4 +1,4 @@
-package com.example.desarr.seguridad;
+package com.example.desarr.seguridad.components;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.desarr.seguridad.R;
 import com.example.desarr.seguridad.dummy.DummyContent.DummyItem;
 
 import java.util.List;
