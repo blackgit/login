@@ -1,19 +1,16 @@
-package com.example.desarr.seguridad;
+package com.example.desarr.seguridad.acts;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
+
+import com.example.desarr.seguridad.R;
 
 public class PosAppActivity
     extends AppCompatActivity

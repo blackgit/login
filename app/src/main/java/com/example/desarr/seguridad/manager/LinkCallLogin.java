@@ -1,8 +1,6 @@
 package com.example.desarr.seguridad.manager;
 
 import android.os.AsyncTask;
-import android.widget.TextView;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;

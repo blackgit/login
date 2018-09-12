@@ -1,5 +1,6 @@
 package com.example.desarr.seguridad.server;
 
+import android.os.AsyncTask;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,9 +9,9 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-public class ServerLogin {
+public class ServerRoute extends AsyncTask<String, String, String> {
 
-    public static String loginMethod() {
+    public static String loginMethod(String param) {
         String serverResponse = null;
         int statusCode;
         StringBuilder sb = new StringBuilder();
@@ -19,7 +20,7 @@ public class ServerLogin {
         URL url;
         HttpURLConnection connection = null;
         try {
-            url = new URL("http://cgepm.gov.ar/sage/androidxyx/android_traer_servicios.asp?documento=28554317");
+            url = new URL("http://www.cgepm.gov.ar:8888/sf/web/movil/getRoute/"+param);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connection.setConnectTimeout(10000);
@@ -56,4 +57,61 @@ public class ServerLogin {
         }
         return serverResponse;
     }
+
+    private final String mEmail;
+    private final String mPassword;
+    private final String mData;
+    String loginProcess = null;
+
+    /**
+     * Constructor
+     * @param email
+     * @param password
+     */
+    public ServerRoute(String email, String password, String data) {
+        mEmail = email;
+        mPassword = password;
+        mData = data;
+    }
+
+    @Override
+    protected String doInBackground(String... params) {
+        loginProcess = ServerRoute.loginMethod(mData);
+        return loginProcess;
+    }
+
+    @Override
+    protected void onPostExecute(String success) {
+        super.onPostExecute(loginProcess);
+        //protected void onPostExecute(final Boolean success) {
+
+        //mAuthTask = null;
+        //showProgress(false);
+
+        //if (success) {
+        /**/
+        /*
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Bundle b = new Bundle();
+        System.out.println("=================" + serverResponse);
+        b.putString("USER", mEmail);
+        b.putString("PASS", mPassword);
+        b.putString("SEC", loginProcess[0]);
+        b.putString("ID", loginProcess[1]);
+        intent.putExtras(b);
+        startActivity(intent);
+        */
+        /**/
+        //} else {
+        //    mPasswordView.setError(getString(R.string.error_incorrect_password));
+        //    mPasswordView.requestFocus();
+        //}
+    }
+
+    @Override
+    protected void onCancelled() {
+        //mAuthTask = null;
+        //showProgress(false);
+    }
+
 }

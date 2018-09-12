@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
 public class LinkCall extends AsyncTask<String,Void,String> {
 
     TextView aView;
@@ -42,9 +41,9 @@ public class LinkCall extends AsyncTask<String,Void,String> {
         HttpURLConnection connection = null;
         int statusCode = 0;
         try {
-            //urls = "http://10.14.10.88/cgepm/web/app.php/movil/seguridadmovil/decodificar/"+code;
-            //url = new URL("http://cgepm.gov.ar/sage/androidxyx/android_traer_servicios.asp?documento=28554317");
-            url = new URL( "http://www.cgepm.gov.ar:8888/sf/web/movil/seguridadmovil/decodificar/"+code);
+            url = new URL(
+                "http://www.cgepm.gov.ar:8888/sf/web/movil/seguridadmovil/procesarParametrosDecode/"+code
+                );
             connection = (HttpURLConnection) url.openConnection();
             System.out.println(connection.getURL().toString());
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");

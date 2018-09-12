@@ -1,5 +1,9 @@
 package com.example.desarr.seguridad.server;
 
+import android.os.AsyncTask;
+
+import com.example.desarr.seguridad.custom.SecurityKey;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,18 +12,40 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-public class ServerLogin {
+public class ServerCall extends AsyncTask<String, String, String> {
 
-    public static String loginMethod() {
-        String serverResponse = null;
-        int statusCode;
-        StringBuilder sb = new StringBuilder();
-        String line;
-        BufferedReader reader = null;
-        URL url;
-        HttpURLConnection connection = null;
+    String serverResponse = null;
+    int statusCode;
+    StringBuilder sb = new StringBuilder();
+    String line;
+    BufferedReader reader = null;
+    URL url;
+    HttpURLConnection connection = null;
+
+    private final String mEmail;
+    private final String mPassword;
+    private final String mData;
+    String loginProcess = null;
+
+    /**
+     * Constructor
+     * @param email
+     * @param password
+     */
+    public ServerCall(String email, String password, String data) {
+        mEmail = email;
+        mPassword = password;
+        mData = data;
+    }
+
+    @Override
+    protected String doInBackground(String... params) {
         try {
-            url = new URL("http://cgepm.gov.ar/sage/androidxyx/android_traer_servicios.asp?documento=28554317");
+            url = new URL("http://www.cgepm.gov.ar:8888/sf/web/movil/getRoute/"+mData);
+            //url = new URL("http://www.cgepm.gov.ar:8888/sf/web/movil/getRoutetest/"+255555);
+            //url = new URL(
+            //        "http://www.cgepm.gov.ar:8888/sf/web/movil/seguridadmovil/procesarParametrosDecode/"+mData
+            //);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connection.setConnectTimeout(10000);
@@ -54,6 +80,20 @@ public class ServerLogin {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return serverResponse;
     }
+
+    @Override
+    protected void onPostExecute(String success) {
+        System.out.println("==============================" + serverResponse);
+        super.onPostExecute(serverResponse);
+    }
+
+    @Override
+    protected void onCancelled() {
+        //mAuthTask = null;
+        //showProgress(false);
+    }
+
 }

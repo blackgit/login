@@ -1,44 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/lytContenedorSaludo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <EditText android:id="@+id/txtToCode"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text" />
-    <EditText android:id="@+id/txtEncoded"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text" />
-    <TextView android:id="@+id/lblPass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="" />
-    <TextView android:id="@+id/txtSaludo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="" />
-    <TextView android:id="@+id/lblResultado"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="" />
-    <TextView android:id="@+id/lblParametros"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="--" />
-    <Button android:id="@+id/btnEncode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Encode" />
-    <Button android:id="@+id/btnSend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/send" />
-    <Button android:id="@+id/btnSendParametros"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SendParametros" />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText android:id="@+id/txtToCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+            <EditText android:id="@+id/txtEncoded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+            <TextView
+                android:id="@+id/lblPass"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="" />
+            <TextView android:id="@+id/txtSaludo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+            <TextView
+                android:id="@+id/lblResultado"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:text="" />
+            <TextView
+                android:id="@+id/lblParametros"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:text="--" />
+            <Button android:id="@+id/btnEncode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Encode" />
+            <Button android:id="@+id/btnSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/send" />
+            <Button android:id="@+id/btnSendParametros"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SendParametros" />
+            <Button android:id="@+id/btnGetDataDev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DataDev" />
+            <TextView
+                android:id="@+id/txtDataToLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:text="p_autenticar-user_123-pass_456-data_"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            <TextView
+                android:id="@+id/txtDataDev"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                android:layout_margin="16dp"
+                android:text="::"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LOGIN" />
+
+            <EditText
+                android:id="@+id/txtResponse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="true"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:singleLine="false"
+                android:text="Name"
+                android:verticalScrollbarPosition="defaultPosition" />
+            <TextView
+                android:id="@+id/tv_long"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="" >
+            </TextView>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

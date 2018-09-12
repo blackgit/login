@@ -28,4 +28,8 @@
 
     <string name="resume">resume...</string>
     <string name="title_activity_pos_app">PosAppActivity</string>
+    <string name="title_activity_cge">CgeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

@@ -57,7 +57,7 @@ public class SecurityKey {
         return String.valueOf(tokenLen) + randomString;
     }
 
-    public static String codificarCadena(String code){
+    private static String codificarCadena(String code){
         String encodedText = null;
         try {
             encodedText =
@@ -80,63 +80,4 @@ public class SecurityKey {
         return decodedText;
     }
 
-    public static String codificar(String code){
-        String resultado = code;
-        char[] arrayLetras = {'C', 'G', 'E', 'L', 'I', 'B'};
-        System.out.println(String.valueOf(arrayLetras));
-        int limite = arrayLetras.length - 1;
-        System.out.println(limite);
-        int num = (int)(Math.random()*((limite-0)+1))+0;
-        System.out.println(num);
-        for (int i = 1; i < num; i++) {
-            resultado = Base64.encodeToString(resultado.getBytes(),Base64.NO_WRAP);
-        }
-        System.out.println(resultado);
-        resultado = resultado + "+" + arrayLetras[num];
-        System.out.println(resultado);
-        resultado = Base64.encodeToString(resultado.getBytes(),Base64.NO_WRAP);
-        System.out.println(resultado);
-        return resultado;
-    }
-
-    private static byte[] encrypt(byte[] raw, byte[] clear) throws Exception {
-        SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
-        byte[] encrypted = cipher.doFinal(clear);
-        return encrypted;
-    }
-
-    private static byte[] decrypt(byte[] raw, byte[] encrypted) throws Exception {
-        SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, skeySpec);
-        byte[] decrypted = cipher.doFinal(encrypted);
-        return decrypted;
-    }
-
-    public static String getInstanceKey(String var){
-        byte[] keyStart;
-        KeyGenerator kgen = null;
-        SecureRandom sr;
-        SecretKey skey;
-        byte[] key = new byte[0];
-        try {
-            keyStart = "encryption key".getBytes();
-            kgen = KeyGenerator.getInstance("AES");
-            sr = SecureRandom.getInstance("SHA1PRNG");
-            sr.setSeed(keyStart);
-            kgen.init(128, sr);
-            skey = kgen.generateKey();
-            key = skey.getEncoded();
-        }catch(Exception ex){
-            System.out.println(ex.getMessage());
-        }
-        return new String(key);
-
-// encrypt
-        //byte[] encryptedData = encrypt(key,b);
-// decrypt
-        //byte[] decryptedData = decrypt(key,encryptedData);
-    }
 }

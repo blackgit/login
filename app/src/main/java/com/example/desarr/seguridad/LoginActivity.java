@@ -39,12 +39,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.desarr.seguridad.manager.LinkCallLogin;
+import com.example.desarr.seguridad.server.ServerIdentification;
 import com.example.desarr.seguridad.server.ServerLogin;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-
+    Context cnx = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -316,11 +318,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<String, String, String> {
+    public class UserLoginTask extends AsyncTask<String, String, String[]> {
 
         private final String mEmail;
         private final String mPassword;
-        String loginProcess;
+        String[] loginProcess = new String[2];
         String serverResponse=null;
         /**
          * Constructor
@@ -331,75 +333,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mEmail = email;
             mPassword = password;
         }
-        @Override
-        protected String doInBackground(String... params) {
-            // TODO: attempt authentication against a network service.
-            /*
+
+        private boolean conexion(){
+            boolean val = false;
             try {
                 // Simulate network access.
                 Thread.sleep(2000);
-            } catch (InterruptedException e) {return "Error";}
-            */
-            /*
+            } catch (InterruptedException e) {}
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+                    val = pieces[1].equals(mPassword);
                 }
             }
-            */
-            serverResponse = ServerLogin.loginMethod();
-            return serverResponse;
-            /*
-            int statusCode = 0;
-            StringBuilder sb=null;
-            BufferedReader reader=null;
-            try {
-                //loginProcess = new LinkCallLogin(mEmail, mEmail).execute().get();
-
-                URL url;
-                HttpURLConnection connection = null;
-                url = new URL("http://cgepm.gov.ar/sage/androidxyx/android_traer_servicios.asp?documento=28554317");
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                connection.setConnectTimeout(10000);
-                connection.setRequestMethod("GET");
-                connection.connect();
-                statusCode = connection.getResponseCode();
-                try{
-                    if (statusCode == 200) {
-                        System.out.println("status code 200");
-                        sb = new StringBuilder();
-                        reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                        String line;
-                        while ((line = reader.readLine()) != null) {
-                            sb.append(line + "\n");
-                        }
-                    }
-                    connection.disconnect();
-                    if (sb!=null)
-                        serverResponse=sb.toString();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    if (reader != null) {
-                        try {
-                            reader.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }catch(Exception ex){return "Error";}
-            // TODO: register the new account here.
-            //return true;
-            return serverResponse;
-            */
+            return val;
         }
 
         @Override
-        protected void onPostExecute(String success) {
+        protected String[] doInBackground(String... params) {
+            loginProcess[0] = ServerLogin.loginMethod();
+            loginProcess[1] = ServerIdentification.id(cnx);
+            return loginProcess;
+            //serverResponse = ServerLogin.loginMethod();
+            //return serverResponse;
+        }
+
+        @Override
+        protected void onPostExecute(String[] success) {
         //protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
@@ -410,7 +371,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 System.out.println("=================" + serverResponse);
                 b.putString("USER", mEmail);
                 b.putString("PASS", mPassword);
-                b.putString("SEC", serverResponse);
+                b.putString("SEC", loginProcess[0]);
+                b.putString("ID", loginProcess[1]);
                 intent.putExtras(b);
                 startActivity(intent);
                 /**/

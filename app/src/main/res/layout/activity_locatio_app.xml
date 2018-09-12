@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:fillViewport="true"
-    tools:context=".LocationAppActivity">
+    tools:context=".acts.LocationAppActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

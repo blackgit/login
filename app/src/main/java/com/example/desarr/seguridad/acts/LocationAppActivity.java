@@ -1,4 +1,4 @@
-package com.example.desarr.seguridad;
+package com.example.desarr.seguridad.acts;
 
 import android.Manifest;
 import android.content.Context;
@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.desarr.seguridad.R;
+
 public class LocationAppActivity
     extends AppCompatActivity
     implements ActivityCompat.OnRequestPermissionsResultCallback{
@@ -30,7 +32,6 @@ public class LocationAppActivity
     TextView longitudeValueBest, latitudeValueBest;
     TextView longitudeValueGPS, latitudeValueGPS;
     TextView longitudeValueNetwork, latitudeValueNetwork;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
