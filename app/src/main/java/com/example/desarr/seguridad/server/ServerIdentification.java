@@ -2,6 +2,9 @@ package com.example.desarr.seguridad.server;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.provider.Settings;
+import android.telephony.TelephonyManager;
+
 import java.util.UUID;
 
 public class ServerIdentification {
@@ -9,7 +12,7 @@ public class ServerIdentification {
     private static String uniqueID = null;
     private static final String PREF_UNIQUE_ID = "PREF_UNIQUE_ID";
 
-    public synchronized static String id(Context context) {
+    public synchronized static String uniqueId(Context context) {
         if (uniqueID == null) {
             SharedPreferences sharedPrefs = context.getSharedPreferences(
                     PREF_UNIQUE_ID, Context.MODE_PRIVATE);
@@ -22,5 +25,15 @@ public class ServerIdentification {
             }
         }
         return uniqueID;
+    }
+
+    public static String suscriberId(Context aContext){
+        String androidId =
+            Settings.Secure.getString(
+                aContext.getContentResolver(),
+                Settings.Secure.ANDROID_ID
+            );
+        TelephonyManager telephonyManager;
+        return androidId;
     }
 }

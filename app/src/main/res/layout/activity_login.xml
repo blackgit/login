@@ -62,6 +62,32 @@
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/locationTxt" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="78dp">
+
+                <TextView
+                    android:id="@+id/tvLocation"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="100dp" />
+            </android.support.design.widget.TextInputLayout>
+
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
@@ -70,6 +96,36 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
+            <Button
+                android:id="@+id/sign_in_post"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/action_sign_in_post"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:text="TextView" />
+
+            <Button
+                android:id="@+id/btnShowLocation"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="11dp"
+                android:layout_toEndOf="@+id/textView"
+                android:layout_toRightOf="@+id/textView"
+                android:background="?attr/actionModePasteDrawable"
+                android:text="Show Location"
+                android:textColor="#ffffffff" />
 
         </LinearLayout>
 

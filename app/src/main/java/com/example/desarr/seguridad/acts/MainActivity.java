@@ -1,4 +1,4 @@
-package com.example.desarr.seguridad;
+package com.example.desarr.seguridad.acts;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.desarr.seguridad.R;
 import com.example.desarr.seguridad.acts.SaludoActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,12 +43,10 @@ public class MainActivity extends AppCompatActivity {
         String dos = bundle.getString("PASS");
         String tres = bundle.getString("SEC");
         String cuatro = bundle.getString("ID");
-
         txtUser.setText(uno);
         txtPass.setText(dos);
         txtRep.setText(tres);
         txtId.setText(cuatro);
-
         //Evento click del botón
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
             b.putString("USER", txtUser.getText().toString());
             b.putString("PASS", txtPass.getText().toString());
             b.putString("RESP", txtRep.getText().toString());
-
             //Información al intent
             intent.putExtras(b);
             //Nueva actividad

@@ -17,6 +17,7 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Pass</string>
     <string name="action_sign_in">Sign in </string>
+    <string name="action_sign_in_post">Sign in Post</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -32,4 +33,5 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="locationTxt">Notifications</string>
 </resources>

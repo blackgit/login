@@ -1,4 +1,4 @@
-package com.example.desarr.seguridad;
+package com.example.desarr.seguridad.components;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,10 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.desarr.seguridad.R;
 import com.example.desarr.seguridad.dummy.DummyContent;
 import com.example.desarr.seguridad.dummy.DummyContent.DummyItem;
-
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -69,7 +68,7 @@ public class ListContentFragmentFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyListContentFragmentRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new CardContentFragment.MyListContentFragmentRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
         return view;
     }

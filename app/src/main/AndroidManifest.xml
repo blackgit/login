@@ -27,14 +27,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".acts.SaludoActivity" />
-        <activity
-            android:name=".acts.LocationAppActivity"
-            android:label="Seguridad1" />
-        <activity
-            android:name=".CgeActivity"
-            android:label="@string/title_activity_cge"></activity>
+        <activity android:name=".acts.MainActivity" />
+
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>
