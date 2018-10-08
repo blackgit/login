@@ -179,11 +179,17 @@ public class LoginActivity extends AppCompatActivity
             finish();
         }
         createLocationRequest();
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
+
+
+
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addApi(LocationServices.API)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .setAccountName("")
+                    .build();
+        }
         tvLocation = (TextView) findViewById(R.id.tvLocation);
         /*Actualizar Posicion*/
         Button btnFusedLocation = (Button) findViewById(R.id.btnShowLocation);
@@ -376,7 +382,7 @@ public class LoginActivity extends AppCompatActivity
     @Override
     public void onConnected(Bundle bundle) {
         Log.d(TAG, "onConnected - isConnected ...............: " + mGoogleApiClient.isConnected());
-        startLocationUpdates();
+        //startLocationUpdates();
     }
 
     protected void startLocationUpdates() {
