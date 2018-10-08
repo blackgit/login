@@ -1,6 +1,7 @@
 package com.example.desarr.seguridad.server;
 
 import android.os.AsyncTask;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,12 +10,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-public class ServerRoute extends AsyncTask<String, String, String> {
-
-    private final String mEmail;
-    private final String mPassword;
-    private final String mData;
-    String loginProcess = null;
+public class ServerRouteLocal extends AsyncTask<String, String, String> {
 
     public static String loginMethod(String param) {
         String serverResponse = null;
@@ -25,7 +21,7 @@ public class ServerRoute extends AsyncTask<String, String, String> {
         URL url;
         HttpURLConnection connection = null;
         try {
-            url = new URL("http://www.cgepm.gov.ar:8888/sf/web/movil/getRoute/"+param);
+            url = new URL("http://10.14.10.83/cgepm/movil/getRoute/"+param);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             connection.setConnectTimeout(10000);
@@ -63,21 +59,28 @@ public class ServerRoute extends AsyncTask<String, String, String> {
         return serverResponse;
     }
 
+    private final String mEmail;
+    private final String mPassword;
+    private final String mData;
+    String loginProcess = null;
+
     /**
      * Constructor
      * @param email
      * @param password
      */
-    public ServerRoute(String email, String password, String data) {
+    public ServerRouteLocal(String email, String password, String data) {
         mEmail = email;
         mPassword = password;
         mData = data;
     }
+
     @Override
     protected String doInBackground(String... params) {
-        loginProcess = ServerRoute.loginMethod(mData);
+        loginProcess = ServerRouteLocal.loginMethod(mData);
         return loginProcess;
     }
+
     @Override
     protected void onPostExecute(String success) {
         super.onPostExecute(loginProcess);
@@ -105,6 +108,7 @@ public class ServerRoute extends AsyncTask<String, String, String> {
         //    mPasswordView.requestFocus();
         //}
     }
+
     @Override
     protected void onCancelled() {
         //mAuthTask = null;

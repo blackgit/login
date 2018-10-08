@@ -17,6 +17,7 @@ import com.example.desarr.seguridad.manager.LinkCall;
 import com.example.desarr.seguridad.manager.LinkCallParams;
 import com.example.desarr.seguridad.server.ServerCall;
 import com.example.desarr.seguridad.server.ServerRoute;
+import com.example.desarr.seguridad.server.ServerRouteLocal;
 
 public class SaludoActivity extends AppCompatActivity {
 
@@ -33,6 +34,7 @@ public class SaludoActivity extends AppCompatActivity {
     private Button btnSendParametros;
     private Button btnLogin;
     private Button btnGetDataDev;
+    private Button btnPostLocal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class SaludoActivity extends AppCompatActivity {
         btnSendParametros = (Button) findViewById(R.id.btnSendParametros);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnGetDataDev = (Button) findViewById(R.id.btnGetDataDev);
+        btnPostLocal = (Button) findViewById(R.id.btnPostLocal);
 
         lblResultado = (TextView) findViewById(R.id.lblResultado);
         lblParametros = (TextView) findViewById(R.id.lblParametros);
@@ -119,7 +122,31 @@ public class SaludoActivity extends AppCompatActivity {
                 txtResponse.setText(Fechas.getMovilHour() + " :: " + sr);
             }
         });
+        //Controller seguridadmovil/getRoute/xxxxx
+        btnPostLocal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = "email";
+                String password = "password";
+                String data = null;
+                String sr = null;
+                try {
+                    data = InfoControl.getDataDev();
+                } catch (Exception ex) {
+                    System.out.println("error");
+                }
+                try {
+                    String encodeData = txtLogin.getText().toString();
+                    encodeData = SecurityKey.codificarParametros(encodeData + data);
+                    sr = new ServerRouteLocal("emailx", "passwordx", encodeData).execute().get();
 
+                } catch (Exception ex) {
+                    System.out.println("error");
+                }
+                txtDataDev.setText("Local::: "+InfoControl.getData());
+                txtResponse.setText("Local::: "+Fechas.getMovilHour() + " :: " + sr);
+            }
+        });
         //DataDevice
         btnGetDataDev.setOnClickListener(new View.OnClickListener() {
             @Override

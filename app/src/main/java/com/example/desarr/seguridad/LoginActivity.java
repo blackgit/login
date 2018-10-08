@@ -179,9 +179,6 @@ public class LoginActivity extends AppCompatActivity
             finish();
         }
         createLocationRequest();
-
-
-
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addApi(LocationServices.API)
@@ -335,7 +332,6 @@ public class LoginActivity extends AppCompatActivity
         StringBuilder total = new StringBuilder();
         //Guardamos la dirección en un buffer de lectura
         BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-
         //Y la leemos toda hasta el final
         try{
             while ((line = rd.readLine()) != null) {
@@ -344,7 +340,6 @@ public class LoginActivity extends AppCompatActivity
         }catch(IOException ex){
             Log.w("Aviso", ex.toString());
         }
-
         // Devolvemos todo lo leido
         return total;
     }
@@ -373,9 +368,11 @@ public class LoginActivity extends AppCompatActivity
     private boolean isGooglePlayServicesAvailable() {
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         if (ConnectionResult.SUCCESS == status) {
+            Log.d(TAG, "google play connected si ..............");
             return true;
         } else {
             GooglePlayServicesUtil.getErrorDialog(status, this, 0).show();
+            Log.d(TAG, "google play connected no ..............");
             return false;
         }
     }
@@ -521,6 +518,16 @@ public class LoginActivity extends AppCompatActivity
         if (mAuthTask != null) {
             return;
         }
+        String email = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
+        mAuthTask = new UserLoginTask(email, password);
+        mAuthTask.execute((String) null);
+    }
+
+    private void attemptLoginWithControl() {
+        if (mAuthTask != null) {
+            return;
+        }
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -640,7 +647,6 @@ public class LoginActivity extends AppCompatActivity
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-
         mEmailView.setAdapter(adapter);
     }
 
@@ -649,7 +655,6 @@ public class LoginActivity extends AppCompatActivity
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
                 ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
         };
-
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
