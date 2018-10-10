@@ -13,11 +13,12 @@ import android.telephony.TelephonyManager;
 public class InfoControl extends Application {
 
     public static String getData(){
-        String data = "SERIAL: " + Build.SERIAL + ".." +
-        "MODEL: " + Build.MODEL + ".." +
-        "ID: " + Build.ID + ".." +
-        "Manufacture: " + Build.MANUFACTURER + ".." +
-        "SDK:  " + Build.VERSION.SDK;
+        String data =
+            "SERIAL: " + Build.SERIAL + ".." +
+            "MODEL: " + Build.MODEL + ".." +
+            "ID: " + Build.ID + ".." +
+            "Manufacture: " + Build.MANUFACTURER + ".." +
+            "SDK:  " + Build.VERSION.SDK;
         return data;
     }
 
@@ -40,10 +41,6 @@ public class InfoControl extends Application {
         "Version Code: " + Build.VERSION.RELEASE;
         */
         return "SERIAL:" + Build.SERIAL+"MODEL:" + Build.MODEL;
-    }
-
-    public static String getInfo() {
-        return "info";
     }
 
     public static String getInfo1(Context context, Activity activity) {

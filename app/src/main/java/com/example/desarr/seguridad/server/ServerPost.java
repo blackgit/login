@@ -39,7 +39,7 @@ public class ServerPost extends AsyncTask<String, String, String> {
         String msjOut = null;
         try{
             nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("lastupdate", "lasupdate"));
+            nameValuePairs.add(new BasicNameValuePair("username", "lasupdate"));
             try {
                 httpclient = new DefaultHttpClient();
                 httppost = new HttpPost("http://www.cgepm.gov.ar:8888/sf/web/movil/testPost");

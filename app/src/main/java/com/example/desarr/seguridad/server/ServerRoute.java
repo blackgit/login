@@ -11,11 +11,24 @@ import java.net.URL;
 
 public class ServerRoute extends AsyncTask<String, String, String> {
 
-    private final String mEmail;
-    private final String mPassword;
+    private String mEmail = null;
+    private String mPassword = null;
     private final String mData;
     String loginProcess = null;
 
+    /**
+     * Constructor
+     * @param email
+     * @param password
+     */
+    public ServerRoute(String email, String password, String data) {
+        mEmail = email;
+        mPassword = password;
+        mData = data;
+    }
+    public ServerRoute(String data) {
+        mData = data;
+    }
     public static String loginMethod(String param) {
         String serverResponse = null;
         int statusCode;
@@ -63,16 +76,6 @@ public class ServerRoute extends AsyncTask<String, String, String> {
         return serverResponse;
     }
 
-    /**
-     * Constructor
-     * @param email
-     * @param password
-     */
-    public ServerRoute(String email, String password, String data) {
-        mEmail = email;
-        mPassword = password;
-        mData = data;
-    }
     @Override
     protected String doInBackground(String... params) {
         loginProcess = ServerRoute.loginMethod(mData);

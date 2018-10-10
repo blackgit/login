@@ -139,7 +139,6 @@ public class SaludoActivity extends AppCompatActivity {
                     String encodeData = txtLogin.getText().toString();
                     encodeData = SecurityKey.codificarParametros(encodeData + data);
                     sr = new ServerRouteLocal("emailx", "passwordx", encodeData).execute().get();
-
                 } catch (Exception ex) {
                     System.out.println("error");
                 }
