@@ -2,6 +2,9 @@ package com.example.desarr.seguridad.server;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.example.desarr.seguridad.custom.InfoControl;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -19,6 +22,7 @@ import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ServerPost extends AsyncTask<String, String, String> {
 
@@ -28,7 +32,8 @@ public class ServerPost extends AsyncTask<String, String, String> {
     }
 
     private static String sendPost(){
-        ArrayList<NameValuePair> nameValuePairs;
+        
+        ArrayList<NameValuePair> nameValuePairs = null;
         HttpClient httpclient = null;
         HttpPost httppost = null;
         HttpResponse response = null;
@@ -37,32 +42,38 @@ public class ServerPost extends AsyncTask<String, String, String> {
         JSONObject job;
         JSONObject mensaje = null;
         String msjOut = null;
+        String deviceInfo = InfoControl.getData();
+
+        HashMap<String, String> params;
+        StringBuilder sbParams = new StringBuilder();
+
         try{
             nameValuePairs = new ArrayList<NameValuePair>();
-            nameValuePairs.add(new BasicNameValuePair("username", "lasupdate"));
-            try {
-                httpclient = new DefaultHttpClient();
-                httppost = new HttpPost("http://www.cgepm.gov.ar:8888/sf/web/movil/testPost");
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                response = httpclient.execute(httppost);
-                Log.d("HTTP", "HTTP: OK");
-                System.out.println("inputStream");
-            } catch (Exception e) {
-                Log.e("HTTP", "Error in http connection " + e.toString());
-            }
+            nameValuePairs.add(new BasicNameValuePair("username", "lastupdate"));
         }catch(IllegalStateException ex){
             Log.w("IOException", ex.toString());
         }
+        
+        try {
+            httpclient = new DefaultHttpClient();
+            httppost = new HttpPost("http://www.cgepm.gov.ar:8888/sf/web/movil/testPost");
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            response = httpclient.execute(httppost);
+        } catch (Exception e) {
+            Log.e("HTTP", "Error in http connection " + e.toString());
+        }
+        
         try {
             job = new JSONObject(inputStreamToString(response.getEntity().getContent()).toString());
             mensaje = job.getJSONObject("mensaje");
             msjOut = mensaje.getString("unidad");
-            System.out.println("===========================================================" + msjOut);
         }catch(Exception ex){
             Log.w("Error", ex.toString());
         }
+        
         return msjOut;
     }
+    
     private static StringBuilder inputStreamToString(InputStream is) {
         String line = "";
         StringBuilder total = new StringBuilder();

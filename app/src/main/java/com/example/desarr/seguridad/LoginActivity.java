@@ -100,7 +100,8 @@ public class LoginActivity extends AppCompatActivity
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{"f@n.com:hello", "bar@n.com:world"};
+    private static final String[] DUMMY_CREDENTIALS =
+            new String[]{"f@n.com:hello", "bar@n.com:world"};
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -123,7 +124,8 @@ public class LoginActivity extends AppCompatActivity
     Location mCurrentLocation;
     String mLastUpdateTime;
     String serverResponse;
-    /**/
+
+    //<editor-fold>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,17 +137,22 @@ public class LoginActivity extends AppCompatActivity
         populateAutoComplete();
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setText("hello");
+
+        //<editor-fold>
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-            if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                attemptLogin();
-                return true;
-            }
-            return false;
+                if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
+                    attemptLogin();
+                    return true;
+                }
+                return false;
             }
         });
+        //</editor-fold>
+
         /*GET login*/
+        //<editor-fold>
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -156,7 +163,10 @@ public class LoginActivity extends AppCompatActivity
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         txtPost = (TextView) findViewById(R.id.textView2);
+        //</editor-fold>
+
         /*POST login*/
+        //<editor-fold>
         Button mSignInPostButton = (Button) findViewById(R.id.sign_in_post);
         mSignInPostButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -171,6 +181,7 @@ public class LoginActivity extends AppCompatActivity
                 //makePostRequest();
             }
         });
+        //</editor-fold>
         Toast.makeText(this, serverResponse, Toast.LENGTH_SHORT).show();
         //
         Log.d(TAG, "onCreate ...............................");
@@ -199,6 +210,100 @@ public class LoginActivity extends AppCompatActivity
         //
         getSpecificPermission();
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart fired ..............");
+        mGoogleApiClient.connect();
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop fired ..............");
+        mGoogleApiClient.disconnect();
+        Log.d(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
+    }
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.d(TAG, "onConnected - isConnected ...............: " + mGoogleApiClient.isConnected());
+        //startLocationUpdates();
+    }
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.d(TAG, "Connection failed: " + connectionResult.toString());
+    }
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.d(TAG, "Firing onLocationChanged..............................................");
+        mCurrentLocation = location;
+        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
+        updateUI();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopLocationUpdates();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mGoogleApiClient.isConnected()) {
+            startLocationUpdates();
+            Log.d(TAG, "Location update resumed .....................");
+        }
+    }
+    /**
+     * Callback received when a permissions request has been completed.
+     */
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String[] permissions,@NonNull int[] grantResults) {
+        if (requestCode == REQUEST_READ_CONTACTS) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                populateAutoComplete();
+            }
+        }
+        if (requestCode == READ_PHONE_STATE) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            }
+        }
+        if (requestCode == 10) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            }
+        }
+    }
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        return new CursorLoader(this,
+                // Retrieve data rows for the device user's 'profile' contact.
+                Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
+                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
+
+                // Select only email addresses.
+                ContactsContract.Contacts.Data.MIMETYPE +
+                        " = ?", new String[]{ContactsContract.CommonDataKinds.Email
+                .CONTENT_ITEM_TYPE},
+
+                // Show primary email addresses first. Note that there won't be
+                // a primary email address if the user hasn't specified one.
+                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
+    }
+    @Override
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        List<String> emails = new ArrayList<>();
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            emails.add(cursor.getString(ProfileQuery.ADDRESS));
+            cursor.moveToNext();
+        }
+
+        addEmailsToAutoComplete(emails);
+    }
+    //</editor-fold>
 
     private void makePostRequest() {
         HttpClient httpClient = new DefaultHttpClient();
@@ -228,7 +333,6 @@ public class LoginActivity extends AppCompatActivity
             e.printStackTrace();
         }
     }
-
     private boolean validar(){
         String username = "nando";
         String pass = "nando";
@@ -292,8 +396,8 @@ public class LoginActivity extends AppCompatActivity
                     Log.w("Aviso", ex.toString());
                     return false;
                 }
-            //}catch(ClientProtocolException ex){
-              //  Log.w("ClientProtocolException", ex.toString());return false;
+                //}catch(ClientProtocolException ex){
+                //  Log.w("ClientProtocolException", ex.toString());return false;
             }catch(UnsupportedEncodingException ex){
                 Log.w("UnsupportedEncodingEx", ex.toString());return false;
             }catch(IOException ex){
@@ -307,7 +411,6 @@ public class LoginActivity extends AppCompatActivity
                     Toast.LENGTH_LONG).show();return false;
         }
     }
-
     private String toMd5(String pass){
         try{
             //Creando Hash MD5
@@ -326,7 +429,6 @@ public class LoginActivity extends AppCompatActivity
             return null;
         }
     }
-
     private StringBuilder inputStreamToString(InputStream is) {
         String line = "";
         StringBuilder total = new StringBuilder();
@@ -343,28 +445,15 @@ public class LoginActivity extends AppCompatActivity
         // Devolvemos todo lo leido
         return total;
     }
-
     protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(INTERVAL);
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
-    /**/
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart fired ..............");
-        mGoogleApiClient.connect();
-    }
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop fired ..............");
-        mGoogleApiClient.disconnect();
-        Log.d(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
-    }
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {
 
+    }
     private boolean isGooglePlayServicesAvailable() {
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         if (ConnectionResult.SUCCESS == status) {
@@ -376,36 +465,11 @@ public class LoginActivity extends AppCompatActivity
             return false;
         }
     }
-    @Override
-    public void onConnected(Bundle bundle) {
-        Log.d(TAG, "onConnected - isConnected ...............: " + mGoogleApiClient.isConnected());
-        //startLocationUpdates();
-    }
-
     protected void startLocationUpdates() {
         PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient, mLocationRequest, this);
         Log.d(TAG, "Location update started ..............: ");
     }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d(TAG, "Connection failed: " + connectionResult.toString());
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        Log.d(TAG, "Firing onLocationChanged..............................................");
-        mCurrentLocation = location;
-        mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-        updateUI();
-    }
-
     private void updateUI() {
         Log.d(TAG, "UI update initiated .............");
         if (null != mCurrentLocation) {
@@ -420,34 +484,17 @@ public class LoginActivity extends AppCompatActivity
             Log.d(TAG, "location is null ...............");
         }
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        stopLocationUpdates();
-    }
-
     protected void stopLocationUpdates() {
         LocationServices.FusedLocationApi.removeLocationUpdates(
                 mGoogleApiClient, this);
         Log.d(TAG, "Location update stopped .......................");
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mGoogleApiClient.isConnected()) {
-            startLocationUpdates();
-            Log.d(TAG, "Location update resumed .....................");
-        }
-    }
-    /**/
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
             return;
         }
         getLoaderManager().initLoader(0, null, this);
     }
-
     private boolean mayRequestContacts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
@@ -469,7 +516,6 @@ public class LoginActivity extends AppCompatActivity
         }
         return false;
     }
-
     private void getSpecificPermission() {
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -490,26 +536,6 @@ public class LoginActivity extends AppCompatActivity
         }
     }
     /**
-     * Callback received when a permissions request has been completed.
-     */
-    @Override
-    public void onRequestPermissionsResult(
-        int requestCode, @NonNull String[] permissions,@NonNull int[] grantResults) {
-        if (requestCode == REQUEST_READ_CONTACTS) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                populateAutoComplete();
-            }
-        }
-        if (requestCode == READ_PHONE_STATE) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            }
-        }
-        if (requestCode == 10) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            }
-        }
-    }
-    /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
@@ -523,7 +549,6 @@ public class LoginActivity extends AppCompatActivity
         mAuthTask = new UserLoginTask(email, password);
         mAuthTask.execute((String) null);
     }
-
     private void attemptLoginWithControl() {
         if (mAuthTask != null) {
             return;
@@ -565,12 +590,10 @@ public class LoginActivity extends AppCompatActivity
             mAuthTask.execute((String) null);
         }
     }
-
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
     }
-
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;
@@ -610,38 +633,6 @@ public class LoginActivity extends AppCompatActivity
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return new CursorLoader(this,
-                // Retrieve data rows for the device user's 'profile' contact.
-                Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-
-                // Select only email addresses.
-                ContactsContract.Contacts.Data.MIMETYPE +
-                        " = ?", new String[]{ContactsContract.CommonDataKinds.Email
-                .CONTENT_ITEM_TYPE},
-
-                // Show primary email addresses first. Note that there won't be
-                // a primary email address if the user hasn't specified one.
-                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
-    }
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-            cursor.moveToNext();
-        }
-
-        addEmailsToAutoComplete(emails);
-    }
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-    }
-
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
@@ -649,7 +640,6 @@ public class LoginActivity extends AppCompatActivity
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
         mEmailView.setAdapter(adapter);
     }
-
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
