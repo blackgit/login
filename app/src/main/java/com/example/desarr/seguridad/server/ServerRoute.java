@@ -20,62 +20,20 @@ public class ServerRoute extends AsyncTask<String, String, String> {
      * Constructor
      * @param email
      * @param password
+     * @param data
      */
     public ServerRoute(String email, String password, String data) {
         mEmail = email;
         mPassword = password;
         mData = data;
     }
+    /**
+     * Constructor
+     * @param data
+     */
     public ServerRoute(String data) {
         mData = data;
     }
-    public static String loginMethod(String param) {
-        String serverResponse = null;
-        int statusCode;
-        StringBuilder sb = new StringBuilder();
-        String line;
-        BufferedReader reader = null;
-        URL url;
-        HttpURLConnection connection = null;
-        try {
-            url = new URL("http://www.cgepm.gov.ar:8888/sf/web/movil/getRoute/"+param);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            connection.setConnectTimeout(10000);
-            connection.setRequestMethod("GET");
-            connection.connect();
-            statusCode = connection.getResponseCode();
-            try {
-                if (statusCode == 200) {
-                    reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    while ((line = reader.readLine()) != null) {
-                        sb.append(line + "\n");
-                    }
-                }
-                connection.disconnect();
-                if (sb != null)
-                    serverResponse = sb.toString();
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return serverResponse;
-    }
-
     @Override
     protected String doInBackground(String... params) {
         loginProcess = ServerRoute.loginMethod(mData);
@@ -114,4 +72,50 @@ public class ServerRoute extends AsyncTask<String, String, String> {
         //showProgress(false);
     }
 
+    public static String loginMethod(String param) {
+        String serverResponse = null;
+        int statusCode;
+        StringBuilder sb = new StringBuilder();
+        String line;
+        BufferedReader reader = null;
+        URL url;
+        HttpURLConnection connection = null;
+        try {
+            url = new URL("http://www.cgepm.gov.ar:8888/cgepm/web/movil/getRoute/"+param);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            connection.setConnectTimeout(10000);
+            connection.setRequestMethod("GET");
+            connection.connect();
+            statusCode = connection.getResponseCode();
+            try {
+                if (statusCode == 200) {
+                    reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                }
+                connection.disconnect();
+                if (sb != null)
+                    serverResponse = sb.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return serverResponse;
+    }
 }

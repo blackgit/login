@@ -1,7 +1,6 @@
 package com.example.desarr.seguridad.server;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.example.desarr.seguridad.custom.Fechas;
 import com.example.desarr.seguridad.custom.InfoControl;
@@ -22,15 +21,16 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
-public class ServerPostConnection extends AsyncTask<String, String, String> {
+public class Autenticar extends AsyncTask<String, String, String> {
 
     String processResponse;
-
-    public ServerPostConnection() {
+    static String data;
+    public Autenticar(String data) {
+        this.data = data;
     }
     @Override
     protected String doInBackground(String... strings) {
-        processResponse = ServerPostConnection.sendPost();
+        processResponse = Autenticar.sendPost();
         return processResponse;
     }
     @Override
@@ -55,12 +55,24 @@ public class ServerPostConnection extends AsyncTask<String, String, String> {
         String deviceInfo = InfoControl.getData();
         HashMap<String, String> params = null;
         String valor;
-
+        //url = "http://www.cgepm.gov.ar:8888/cgepm/web/movil/testPost";
+        //url = "http://www.cgepm.gov.ar:8888/cgepm/web/movil/getRoutelogin";
+        url = "http://www.cgepm.gov.ar:8888/cgepm/web/movil/seguridadmovil/ver/";
         params = new HashMap<String,String>();
         params.put("username","testPost"+Fechas.getMovilDate());
-        params.put("documento","26529520");
-        params.put("device","555"+deviceInfo.length());
-
+        //params.put("param1",data);
+        params.put("param1","201039bA614NDWdnIHwxAqUPibb612oomaWrQXKYzNa_620GsGxoapGuCZpXCuPvgNYat618TPjvTMmuLnBiAGSIRB-d616uOkBqYseTykddTyQ56613puiKqIzDbAGXb_4617UovphCNjMmjAAonbQss611fVyTpVRSWmNpa611FGEcunhIWTO3-615oKstbxjTpqhWHdD12610kTofCzHIOfr_615IyxjDMNCriMWwSFse612StdIdStiaTle-u611AQmBuVYBDKgar611JVdUONGIzYgic620UMwODQUDHvsoJmguPAeTnt616XDkePvrYLYNoZewHte613eQgTRUswIftkvau615QTxuOKEUQtkwdgfp_620eIIXalKtuADLrNgVxIKy");
+/*        params.put("param1","2010399x416bhCGQkVFxBeExxUr78420ZAHVXAYiTVRydRbiinOJa" +
+                "_414rStFzqxqoCtFyYat419KPeNKfCeFdudosFsDry" +
+                "-d414wiXwFeHXSAikAZ56420nWEoZxUMlYTlbdsDngfr" +
+                "_4419HwBEBwdEiRRyytxfTEhss412jHYcBzzMintypa416" +
+                "PuXlAifgVyQuStti3" +
+                "-420VOicqizLmHYomxvshztF12420UWiymCrnXjMKwMpRUVDrr" +
+                "_412ocPQMmWGfDdxse417YzyjOIIUdlkiNYrYG" +
+                "-u418uSLjgdSrisSJSnevrlar412XBPXZYDrmrKpic419" +
+                "epMtjbcGGzJEjEyZVtXnt410lNhnJmcrszte419tcgHtSWycbEKqyNIIRQau" +
+                "414EEJSUmLycvdzhdp" +
+                "_418ODKCoKHurwOBNIdRAC");*/
         try{
             int i = 0;
             for (String key : params.keySet()) {
@@ -82,8 +94,6 @@ public class ServerPostConnection extends AsyncTask<String, String, String> {
             ex.printStackTrace();
         }
         try {
-            url = "http://www.cgepm.gov.ar:8888/cgepm/web/movil/testPost";
-
             urlObj = new URL(url);
             httpConn = (HttpURLConnection)urlObj.openConnection();
             httpConn.setRequestMethod("POST");
@@ -95,40 +105,14 @@ public class ServerPostConnection extends AsyncTask<String, String, String> {
             doStream.writeBytes(paramsString);
             doStream.flush();
             doStream.close();
-            //int rep = httpConn.getResponseCode();
             InputStream ins = httpConn.getErrorStream();
             if (ins == null) {
                 ins = httpConn.getInputStream();
             }
             breader = new BufferedReader(new InputStreamReader(ins));
-            //result.append(rep);
             while((line=breader.readLine()) != null){
                 result.append(line);
             }
-            /**/
-            try{
-            JSONObject jobj =  new JSONObject(result.toString());
-            result.delete(0,result.length());
-            if (jobj != null) {
-                try {
-                    JSONArray jarray = jobj.getJSONArray("vector");
-                    result.append("\n");
-                    result.append(jarray.getJSONObject(0).getString("nombres"));
-                    result.append("\n");
-                    result.append(jarray.getJSONObject(0).getString("apellidos"));
-                    result.append("\n");
-                    result.append(jarray.getJSONObject(0).getString("documento"));
-                    result.append("\n");
-                    result.append(jarray.getJSONObject(0).getString("cuit"));
-
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            }catch(Exception ex){}
-            /**/
         } catch(IOException e){
             e.printStackTrace();
         }

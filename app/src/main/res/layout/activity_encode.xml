@@ -3,6 +3,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/lytContenedorSaludo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,14 +13,14 @@
         android:id="@+id/txtUrl"
         android:layout_width="352dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:text="" />
 
     <EditText
         android:id="@+id/txtParams"
         android:layout_width="351dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:text=""
         app:layout_constraintBottom_toTopOf="@+id/btnSend" />
 
@@ -27,57 +28,99 @@
         android:id="@+id/txtEncode"
         android:layout_width="351dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:text=""
         app:layout_constraintBottom_toTopOf="@+id/btnSend" />
 
-    <Button
-        android:id="@+id/btnSend"
-        android:layout_width="209dp"
-        android:layout_height="41dp"
-        android:layout_marginBottom="20dp"
-        android:text="Send"
-        app:layout_constraintBottom_toTopOf="@+id/btnPost"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btnPost"
-        android:layout_width="209dp"
-        android:layout_height="41dp"
-        android:layout_marginBottom="20dp"
-        android:text="Post"
-        app:layout_constraintBottom_toTopOf="@+id/txtResponse"
-        />
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="140dp"
+            android:layout_height="41dp"
+            android:layout_marginBottom="10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:text="Send"
+            app:layout_constraintBottom_toTopOf="@+id/btnPost" />
+
+        <Button
+            android:id="@+id/btnPost"
+            android:layout_width="209dp"
+            android:layout_height="41dp"
+            android:layout_marginBottom="10dp"
+            android:text="Post"
+            app:layout_constraintBottom_toTopOf="@+id/txtResponse" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/txtResponse"
         android:layout_width="351dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:text="@string/response" />
 
 
     <EditText
         android:id="@+id/txtResponsePost"
         android:layout_width="351dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:text="@string/response" />
 
-    <Button
-        android:id="@+id/btnPostHandler"
-        android:layout_width="209dp"
-        android:layout_height="41dp"
-        android:layout_marginBottom="20dp"
-        android:text="PostHandler"
-        />
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="71dp"
+        android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/http_url_response_text_view"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
 
-    </ScrollView>
+            <EditText
+                android:id="@+id/http_url_response_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btnPostHandler"
+            android:layout_width="209dp"
+            android:layout_height="41dp"
+            android:layout_marginBottom="10dp"
+            android:text="PostHandler" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnRouteLogin"
+            android:layout_width="209dp"
+            android:layout_height="41dp"
+            android:layout_marginBottom="10dp"
+            android:text="LOGIN"
+            app:layout_constraintBottom_toTopOf="@+id/txtRoute" />
+
+        <Button
+            android:id="@+id/btnRouteOperation"
+            android:layout_width="209dp"
+            android:layout_height="41dp"
+            android:layout_marginBottom="10dp"
+            android:text="Operation"
+            app:layout_constraintBottom_toTopOf="@+id/txtRoute" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/txtRoute"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/common_signin_btn_dark_text_disabled"
+        android:text="rr" />
+
 </LinearLayout>
